@@ -1,6 +1,6 @@
-package java.main.com.WGLib;
+package main.java.com.WGLib;
 
-import java.main.com.WGLib.graphics.WindowlessFrame;
+import com.WGLib.graphics.WindowlessFrame;
 
 public class Test {
     public static void main(String[] args) {

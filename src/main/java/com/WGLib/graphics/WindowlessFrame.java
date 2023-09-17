@@ -1,4 +1,4 @@
-package java.main.com.WGLib.graphics;
+package com.WGLib.graphics;
 
 import javax.swing.*;
 import java.awt.*;
