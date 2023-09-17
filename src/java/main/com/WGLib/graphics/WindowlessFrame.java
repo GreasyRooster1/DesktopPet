@@ -9,7 +9,7 @@ import java.io.File;
 
 public class WindowlessFrame extends JFrame {
     private int mouseX,mouseY;
-    private boolean isDraggable = true;
+    private static boolean isDraggable = true;
     public WindowlessFrame(int width,int height){
         super();
         this.setSize(width, height);
@@ -37,14 +37,45 @@ public class WindowlessFrame extends JFrame {
             }
         });
     }
+
+    void setDraggable(boolean a){
+        isDraggable = a;
+    }
     void setImage(String filePath){
         JLabel imageLabel = new JLabel(new ImageIcon(filePath));
         this.add(imageLabel);
     }
 
-    static class Builder{
-        Builder(){
+    public static class Builder{
+        private int width,height;
+        private String imagePath;
+        private boolean isDraggable = true;
 
+        public Builder(int width, int height) {
+            this.width = width;
+            this.height = height;
+        }
+
+        public WindowlessFrame.Builder image(String filepath){
+            String imagePath = new File("").getAbsolutePath();
+            imagePath = imagePath.concat(filepath);
+            return this;
+        }
+
+        public WindowlessFrame.Builder isDraggable(boolean a){
+            isDraggable = a;
+            return this;
+        }
+
+        public WindowlessFrame build(){
+            WindowlessFrame frame = new WindowlessFrame(width,height);
+
+            if(imagePath!=null){
+                frame.setImage(imagePath);
+            }
+            frame.setDraggable(isDraggable);
+
+            return frame;
         }
     }
 }
