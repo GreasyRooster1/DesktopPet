@@ -1,4 +1,4 @@
-package main.java.com.WGLib.graphics;
+package main.java.com.DesktopPet.graphics;
 
 import javax.swing.*;
 import java.awt.*;
@@ -7,10 +7,12 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.io.File;
 
-public class WindowlessFrame extends JFrame {
+public class PetFrame extends JFrame {
     private int mouseX,mouseY;
     private static boolean isDraggable = true;
-    public WindowlessFrame(int width,int height){
+    private JLabel imageLabel;
+    private JPopupMenu popup;
+    public PetFrame(int width, int height){
         super();
         this.setSize(width, height);
         this.setLocation(50, 50);
@@ -36,43 +38,69 @@ public class WindowlessFrame extends JFrame {
                 }
             }
         });
+
+        addMouseListener(new MouseAdapter() {
+            public void mouseReleased(MouseEvent me) {
+                if(popup!=null) {
+                    showPopup(me, popup); // showPopup() is our own user-defined method
+                }
+            }
+        }) ;
     }
 
     void setDraggable(boolean a){
         isDraggable = a;
     }
+
     void setImage(String filePath){
-        JLabel imageLabel = new JLabel(new ImageIcon(filePath));
+        imageLabel = new JLabel(new ImageIcon(filePath));
         this.add(imageLabel);
+    }
+
+    void setPopup(JPopupMenu p){
+        popup = p;
+    }
+
+    void showPopup(MouseEvent me,JPopupMenu popup) {
+        if(me.isPopupTrigger()) {
+            popup.show(me.getComponent(), me.getX(), me.getY());
+        }
     }
 
     public static class Builder{
         private int width,height;
         private String imagePath;
         private boolean isDraggable = true;
+        private JPopupMenu popup;
 
         public Builder(int width, int height) {
             this.width = width;
             this.height = height;
         }
 
-        public WindowlessFrame.Builder image(String filepath){
+        public PetFrame.Builder image(String filepath){
             String filePath = new File("").getAbsolutePath();
             imagePath = filePath.concat(filepath);
             return this;
         }
 
-        public WindowlessFrame.Builder isDraggable(boolean a){
+        public PetFrame.Builder isDraggable(boolean a){
             isDraggable = a;
             return this;
         }
 
-        public WindowlessFrame build(){
-            WindowlessFrame frame = new WindowlessFrame(width,height);
+        public PetFrame.Builder setPopupMenu(JPopupMenu jpopup){
+            popup = jpopup;
+            return this;
+        }
+
+        public PetFrame build(){
+            PetFrame frame = new PetFrame(width,height);
 
             if(imagePath!=null){
                 frame.setImage(imagePath);
             }
+            frame.setPopup(popup);
             frame.setDraggable(isDraggable);
 
             return frame;
