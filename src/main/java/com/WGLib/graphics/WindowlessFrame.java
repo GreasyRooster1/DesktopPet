@@ -1,4 +1,4 @@
-package com.WGLib.graphics;
+package main.java.com.WGLib.graphics;
 
 import javax.swing.*;
 import java.awt.*;
@@ -57,8 +57,8 @@ public class WindowlessFrame extends JFrame {
         }
 
         public WindowlessFrame.Builder image(String filepath){
-            String imagePath = new File("").getAbsolutePath();
-            imagePath = imagePath.concat(filepath);
+            String filePath = new File("").getAbsolutePath();
+            imagePath = filePath.concat(filepath);
             return this;
         }
 
